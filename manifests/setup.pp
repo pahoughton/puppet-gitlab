@@ -7,33 +7,35 @@ class gitlab::setup inherits gitlab {
     group     => $git_user,
   }
 
-  # user
-  user { $git_user:
-    ensure   => present,
-    shell    => '/bin/bash',
-    password => '*',
-    home     => $git_home,
-    comment  => $git_comment,
-    system   => true,
-  }
+  if $git_create_user {
+    # user
+    user { $git_user:
+      ensure   => present,
+      shell    => '/bin/bash',
+      password => '*',
+      home     => $git_home,
+      comment  => $git_comment,
+      system   => true,
+    }
 
-  sshkey { 'localhost':
-    ensure       => present,
-    host_aliases => $::fqdn,
-    key          => $::sshrsakey,
-    type         => 'ssh-rsa',
-  }
+    sshkey { 'localhost':
+      ensure       => present,
+      host_aliases => $::fqdn,
+      key          => $::sshrsakey,
+      type         => 'ssh-rsa',
+    }
 
-  file { "${git_home}/.gitconfig":
-    ensure    => file,
-    content   => template('gitlab/git.gitconfig.erb'),
-    mode      => '0644',
-  }
+    file { "${git_home}/.gitconfig":
+      ensure    => file,
+      content   => template('gitlab/git.gitconfig.erb'),
+      mode      => '0644',
+    }
 
-  # directories
-  file { $git_home:
-    ensure => directory,
-    mode   => '0755',
+    # directories
+    file { $git_home:
+      ensure => directory,
+      mode   => '0755',
+    }
   }
 
   file { "${git_home}/gitlab-satellites":
@@ -74,11 +76,6 @@ class gitlab::setup inherits gitlab {
     }
   } # Case $::osfamily
 
-  # system packages
-  package { 'bundler':
-    ensure    => installed,
-    provider  => gem,
-  }
 
   # dev. dependencies
   ensure_packages($system_packages)
@@ -89,5 +86,5 @@ class gitlab::setup inherits gitlab {
   }
 
   # other packages
-  ensure_packages([$git_package_name,'postfix','curl'])
+  #ensure_packages([$git_package_name,'bundler','postfix','curl'])
 }

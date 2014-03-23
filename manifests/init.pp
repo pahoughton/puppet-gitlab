@@ -226,6 +226,7 @@
 #
 class gitlab(
     $ensure                   = $gitlab::params::ensure,
+  $git_create_user            = true,
     $git_user                 = $gitlab::params::git_user,
     $git_home                 = $gitlab::params::git_home,
     $git_email                = $gitlab::params::git_email,
