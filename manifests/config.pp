@@ -54,13 +54,6 @@ class gitlab::config inherits gitlab {
     mode      => '0755',
   }
 
-  # symlink fix for python
-  file { '/usr/bin/python2':
-    ensure => link,
-    owner  => root,
-    group  => root,
-    target => '/usr/bin/python';
-  }
 
   # backup task
   if $gitlab_backup {
