@@ -19,11 +19,17 @@ class gitlab::install inherits gitlab {
     group => $git_user,
   }
 
+  file { "${git_home}/gitlab/modernizr-2.6.2.gem" :
+    ensure  => file,
+    source  => "puppet:///modules/gitlab/modernizr-2.6.2.gem",
+    require => File[$git_home],
+  }
   # gitlab shell
   file { "${git_home}/gitlab-shell/config.yml":
     ensure  => file,
     content => template('gitlab/gitlab-shell.config.yml.erb'),
     mode    => '0644',
+    require => File[$git_home],
   }
 
   exec { 'install gitlab-shell':
@@ -38,33 +44,39 @@ class gitlab::install inherits gitlab {
     ensure  => file,
     content => template('gitlab/database.yml.erb'),
     mode    => '0640',
+    require => File[$git_home],
   }
 
   file { "${git_home}/gitlab/config/unicorn.rb":
     ensure  => file,
     content => template('gitlab/unicorn.rb.erb'),
+    require => File[$git_home],
   }
 
   file { "${git_home}/gitlab/config/gitlab.yml":
     ensure  => file,
     content => template('gitlab/gitlab.yml.erb'),
     mode    => '0640',
+    require => File[$git_home],
   }
 
   file { "${git_home}/gitlab/config/resque.yml":
     ensure  => file,
     content => template('gitlab/resque.yml.erb'),
+    require => File[$git_home],
   }
 
   file { "${git_home}/gitlab/config/initializers/rack_attack.rb":
     ensure => file,
-    source => "${git_home}/gitlab/config/initializers/rack_attack.rb.example"
+    source => "${git_home}/gitlab/config/initializers/rack_attack.rb.example",
+    require => File[$git_home],
   }
 
   if $gitlab_relative_url_root {
     file { "${git_home}/gitlab/config/application.rb":
       ensure  => file,
       content => template('gitlab/application.rb.erb'),
+      require => File[$git_home],
     }
   }
 
