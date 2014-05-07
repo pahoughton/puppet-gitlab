@@ -8,3 +8,4 @@ metadata.json
 Gemfile.lock
 coverage/
 spec/fixtures/modules/
+*~
