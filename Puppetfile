@@ -2,10 +2,7 @@
 #
 # Copyright (c) 2014 Paul Houghton <paul4hough@gmail.com>
 #
-#
-# Used to install dependent modules for testing
-#
 forge "http://forge.puppetlabs.com"
 
-mod 'puppetlabs/stdlib'
-mod 'puppetlabs/vcsrepo'
+mod 'puppetlabs/stdlib', '>= 3.1.0'
+mod 'puppetlabs/vcsrepo', '>= 0.2.0'
