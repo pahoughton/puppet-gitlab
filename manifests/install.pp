@@ -21,7 +21,7 @@ class gitlab::install inherits gitlab {
 
   file { "${git_home}/gitlab/modernizr-2.6.2.gem" :
     ensure  => file,
-    source  => "puppet:///modules/gitlab/modernizr-2.6.2.gem",
+    source  => 'puppet:///modules/gitlab/modernizr-2.6.2.gem',
     require => File[$git_home],
   }
   # gitlab shell
@@ -67,8 +67,8 @@ class gitlab::install inherits gitlab {
   }
 
   file { "${git_home}/gitlab/config/initializers/rack_attack.rb":
-    ensure => file,
-    source => "${git_home}/gitlab/config/initializers/rack_attack.rb.example",
+    ensure  => file,
+    source  => "${git_home}/gitlab/config/initializers/rack_attack.rb.example",
     require => File[$git_home],
   }
 
