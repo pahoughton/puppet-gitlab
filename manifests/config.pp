@@ -7,15 +7,16 @@ class gitlab::config inherits gitlab {
     group     => $git_user,
   }
 
-  # gitlab
-  # fixme - this needs to be optional
-  # file { '/etc/nginx/conf.d/gitlab.conf':
-  #   ensure  => file,
-  #   content => template('gitlab/nginx-gitlab.conf.erb'),
-  #   owner   => root,
-  #   group   => root,
-  #   mode    => '0644',
-  # }
+  # todo - still not liking this
+  if $gitlab_http_port {
+    file { '/etc/nginx/conf.d/gitlab.conf':
+      ensure  => file,
+      content => template('gitlab/nginx-gitlab.conf.erb'),
+      owner   => root,
+      group   => root,
+      mode    => '0644',
+    }
+  }
 
   file { '/etc/default/gitlab':
     ensure  => file,
@@ -54,6 +55,14 @@ class gitlab::config inherits gitlab {
     ensure    => directory,
     mode      => '0755',
   }
+
+  # symlink fix for python - note also defined by pahoughton:puppet-python
+  ensure_resource('file','/usr/bin/python2',{
+    ensure => link,
+    owner => root,
+    group => root,
+    target => '/usr/bin/python',
+  })
 
 
   # backup task
