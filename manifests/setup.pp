@@ -80,16 +80,14 @@ class gitlab::setup inherits gitlab {
   # dev. dependencies
   ensure_packages($system_packages)
 
-  package { 'charlock_holmes':
+  ensure_resource('package','charlock_holmes',{
     ensure    => '0.6.9.4',
     provider  => gem,
-  }
-  if ! defined( Package['bundler'] ) {
-    package { 'bundler' :
-      ensure   => 'present',
-      provider => 'gem',
-    }
-  }
+  })
+  ensure_resource('package','bundler',{
+    ensure   => 'installed',
+    provider => 'gem',
+  })
   # other packages
   ensure_packages([$git_package_name,'postfix','curl'])
 }
