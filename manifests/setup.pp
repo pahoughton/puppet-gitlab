@@ -75,10 +75,10 @@ class gitlab::setup inherits gitlab {
   } # Case $::osfamily
 
   # system packages
-  package { 'bundler':
-    ensure    => installed,
+
+  ensure_resource('package',['bundler',], {
     provider  => gem,
-  }
+  })
 
   # dev. dependencies
   ensure_packages($system_packages)
