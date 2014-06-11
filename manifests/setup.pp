@@ -84,10 +84,13 @@ class gitlab::setup inherits gitlab {
     ensure    => '0.6.9.4',
     provider  => gem,
   })
-  ensure_resource('package','bundler',{
-    ensure   => 'installed',
-    provider => 'gem',
-  })
+  if ! defined(Package['bundler']) {
+    ensure_resource('package','bundler',{
+      ensure   => 'installed',
+      provider => 'gem',
+      })
+  }
+
   # other packages
   ensure_packages([$git_package_name,'postfix','curl'])
 }
