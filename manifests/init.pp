@@ -300,7 +300,7 @@ class gitlab(
   validate_re($gitlab_dbport, '^\d+$', 'gitlab_dbport is not a valid port')
   validate_re($ldap_port, '^\d+$', 'ldap_port is not a valid port')
   validate_re($gitlab_ssl_port, '^\d+$', 'gitlab_ssl_port is not a valid port')
-  validate_re($gitlab_http_port, '^\d+$', 'gitlab_http_port is not a valid port')
+  validate_re($gitlab_http_port, '^\d*$', 'gitlab_http_port is not a valid port')
   validate_re($gitlab_http_timeout, '^\d+$', 'gitlab_http_timeout is not a number')
   validate_re($gitlab_redisport, '^\d+$', 'gitlab_redisport is not a valid port')
   validate_re($ldap_method, '(ssl|tls|plain)', 'ldap_method is not supported (ssl, tls or plain)')

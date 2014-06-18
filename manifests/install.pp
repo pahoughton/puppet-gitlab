@@ -1,6 +1,18 @@
 # Class:: gitlab::install
 #
 #
+## Manual actions required until gitlab package is fixed.
+#
+# fixme - repo directory was set wrong in gitlab/config/gitlab.yml
+#
+# edit Gemfile* as described at:
+# http://stackoverflow.com/questions/22825497/installing-gitlab-missing-modernizer/22827382#22827382
+# su git - -c 'bundle install --without development --without mysqlclientlib aws test --deployment'
+# su git - -c 'bundle exec rake db:migrate RAILS_ENV=production'
+# su git - -c 'bundle exec rake assets:clean assets:precompile cache:clear RAILS_ENV=production'
+# /usr/bin/yes yes | su git - -c 'bundle exec rake gitlab:setup RAILS_ENV=production'
+#
+#
 class gitlab::install inherits gitlab {
 
   $gitlab_without_gems = $gitlab_dbtype ? {

@@ -9,6 +9,7 @@ class gitlab::config inherits gitlab {
 
   # todo - still not liking this
   if $gitlab_http_port {
+    fail("gitlab http port: ${gitlab_http_port}")
     file { '/etc/nginx/conf.d/gitlab.conf':
       ensure  => file,
       content => template('gitlab/nginx-gitlab.conf.erb'),
