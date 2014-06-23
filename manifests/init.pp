@@ -2,6 +2,7 @@
 #
 # Install and configure a GitLab server using puppet.
 #
+# fixme - Fedora: yum install redis, visudo #Default requiretty
 # === Parameters
 #
 # [*ensure*]
