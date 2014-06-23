@@ -62,7 +62,7 @@ class gitlab::config inherits gitlab {
     ensure => link,
     owner => root,
     group => root,
-    target => '/usr/bin/python',
+    target => '/usr/bin/python2.7',
   })
 
 
