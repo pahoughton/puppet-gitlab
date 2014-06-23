@@ -61,7 +61,11 @@ class gitlab::setup inherits gitlab {
     'RedHat': {
       case $gitlab_dbtype {
         'mysql': {
-          ensure_packages(['mysql-devel'])
+          if $::operatingsystem == 'Fedora' {
+            ensure_packages(['mariadb-devel'])
+          } else {
+            ensure_packages(['mysql-devel'])
+          }
         }
         'pgsql': {
           ensure_packages(['postgresql-devel'])
