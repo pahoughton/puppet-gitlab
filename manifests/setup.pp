@@ -46,6 +46,7 @@ class gitlab::setup inherits gitlab {
   # database dependencies
   case $::osfamily {
     'Debian': {
+      ensure_packages(['redis-server'])
       case $gitlab_dbtype {
         'mysql': {
           ensure_packages(['libmysql++-dev','libmysqlclient-dev'])
@@ -59,6 +60,7 @@ class gitlab::setup inherits gitlab {
       }
     }
     'RedHat': {
+      ensure_packages(['redis'])
       case $gitlab_dbtype {
         'mysql': {
           if $::operatingsystem == 'Fedora' {
