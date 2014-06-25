@@ -17,7 +17,7 @@ class gitlab::install inherits gitlab {
 
   $gitlab_without_gems = $gitlab_dbtype ? {
     'mysql' => 'postgres',
-    'pgsql' => 'mysql',
+    'pgsql' => 'mysqlclientlib',
     default => '',
   }
 
